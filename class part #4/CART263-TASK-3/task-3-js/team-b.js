@@ -45,7 +45,45 @@ function setup_B() {
 
   function aniB(parentCanvas) {
       console.log("in ani-B -teamB");
-    
+
+    //color set
+    let sampleColors = [
+    "blue"
+    ];
+
+    //get the rendered bounding Box of parent and use the width and height
+    let boundingBoxParent = parentCanvas.getBoundingClientRect();
+
+    //make a grid of cells
+    for (let i = 10; i < boundingBoxParent.width; i += 15) {
+      for (let j = 10; j < boundingBoxParent.height; j += 15) {
+        //create a div and place in the grid
+        let rect = document.createElement("div");
+        rect.classList.add("TEAM_B_h_cell");
+        parentCanvas.appendChild(rect);
+        rect.style.left = `${j}px`;
+        rect.style.top = `${i}px`;
+        rect.style.width = "10px";
+        rect.style.height = "10px";
+        rect.style.opacity = 1;
+        rect.setAttribute("activenum", 0);
+
+        //add an event listener to each div...
+        rect.addEventListener("mousemove", clickEventHandlerOnRec);
+      }
+    }
+
+    /****** callback for click on a rect in the grid **********/
+    function clickEventHandlerOnRec() {
+      // //"this" is the element that the mouse is over on
+
+      let activenumAtt = parseInt(this.getAttribute("activenum"));
+      if (activenumAtt < sampleColors.length) {
+        //add ONE set interval call for each rect when it is clicked
+        this.setAttribute("activenum", activenumAtt + 1);
+        this.style.background = sampleColors[activenumAtt];
+      }
+    }
   }
   /****************ANI C ************************************ */
   /** PUT ALL YOUR CODE FOR INTERACTIVE PATTERN C INSIDE HERE */
